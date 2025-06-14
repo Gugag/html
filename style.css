@@ -1,0 +1,83 @@
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #1e1e1e;
+  color: #e0e0e0;
+  margin: 0;
+  padding: 0;
+}
+.header {
+  background: linear-gradient(135deg, #ff5722, #ff9800);
+  text-align: center;
+  padding: 2rem;
+}
+.header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  color: #fff;
+}
+.header p {
+  color: #fff;
+  opacity: 0.8;
+}
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 2rem;
+}
+.trick-card {
+  background: #2a2a2a;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-left: 5px solid #ff9800;
+  border-radius: 8px;
+}
+.trick-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(247, 223, 30, 0.2);
+  border-color: #00ff33;
+}
+
+.trick-card h2 {
+  color: #ffcc80;
+  margin-bottom: 0.5rem;
+}
+.trick-card p {
+  color: #bbb;
+}
+.code-block {
+  background: #121212;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 5px;
+  font-family: monospace;
+  overflow-x: auto;
+  color: #9cdcfe;
+}
+.demo-button {
+  margin-top: 1rem;
+  background: #ff9800;
+  color: #1e1e1e;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.demo-output {
+  background: #fff;
+  color: #000;
+  padding: 1rem;
+  margin-top: 1rem;
+  border-radius: 5px;
+  display: none;
+}
+#pagination button {
+  margin: 0 5px;
+  padding: 0.5rem 1rem;
+  background: #ff9800;
+  border: none;
+  border-radius: 5px;
+  color: #1e1e1e;
+  font-weight: bold;
+  cursor: pointer;
+}
