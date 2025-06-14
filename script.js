@@ -949,31 +949,26 @@ const htmlTricks = [
 
 const tricksPerPage = 10;
 let currentPage = 1;
-let currentFilteredTricks = htmlTricks; // NEW: Keep track of currently displayed tricks
+let currentFilteredTricks = htmlTricks;
 
 function renderTricksPage(tricksArray) {
-  // MODIFIED: now accepts tricksArray
   const container = document.getElementById("trick-container");
   container.innerHTML = "";
 
   const startIndex = (currentPage - 1) * tricksPerPage;
   const endIndex = startIndex + tricksPerPage;
-  const pageTricks = tricksArray.slice(startIndex, endIndex); // MODIFIED: use tricksArray
+  const pageTricks = tricksArray.slice(startIndex, endIndex);
 
- pageTricks.forEach((trick) => {
+  pageTricks.forEach((trick) => {
     const trickEl = document.createElement("div");
     trickEl.className = "trick-card";
     trickEl.innerHTML = `
-      <h2 contenteditable="true" spellcheck="false">${trick.id}. ${
-      trick.title
-    }</h2>
+      <h2 contenteditable="true" spellcheck="false">${trick.id}. ${trick.title}</h2>
       <p contenteditable="true" spellcheck="false">${trick.description}</p>
-      <div class="code-block" contenteditable="true" spellcheck="false">
-        <code>${trick.code.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code>
+      <div class="code-block" contenteditable="true" spellcheck="false" id="code${trick.id}">
+        ${trick.code.replace(/</g, "&lt;").replace(/>/g, "&gt;")}
       </div>
-      <button class="demo-button" onclick="toggleDemo('demo${
-        trick.id
-      }')">Show Demo</button>
+      <button class="demo-button" onclick="toggleDemo('demo${trick.id}')">Show Demo</button>
       <div class="demo-output" id="demo${trick.id}">${trick.demoHtml}</div>
     `;
     container.appendChild(trickEl);
@@ -994,19 +989,32 @@ function renderPagination(totalTricks) {
     if (i === currentPage) btn.style.backgroundColor = "#ffcc80";
     btn.onclick = () => {
       currentPage = i;
-      // MODIFIED: This now needs to render based on currentFilteredTricks
       renderTricksPage(currentFilteredTricks);
     };
     paginationContainer.appendChild(btn);
   }
 }
 
-function toggleDemo(id) {
-  const el = document.getElementById(id);
-  el.style.display = el.style.display === "block" ? "none" : "block";
+function toggleDemo(demoId) {
+  const demoDiv = document.getElementById(demoId);
+  const codeId = demoId.replace("demo", "code");
+  const codeBlock = document.getElementById(codeId);
+
+  if (!codeBlock) return;
+
+  if (demoDiv.style.display === "block") {
+    demoDiv.style.display = "none";
+  } else {
+    demoDiv.style.display = "block";
+
+    const editedCode = codeBlock.innerText
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">");
+
+    demoDiv.innerHTML = editedCode;
+  }
 }
 
-// NEW: Search functionality event listener
 document.getElementById("searchBox").addEventListener("input", (e) => {
   const searchTerm = e.target.value.toLowerCase();
   currentFilteredTricks = htmlTricks.filter(
@@ -1015,9 +1023,8 @@ document.getElementById("searchBox").addEventListener("input", (e) => {
       trick.description.toLowerCase().includes(searchTerm) ||
       trick.code.toLowerCase().includes(searchTerm)
   );
-  currentPage = 1; // Reset to the first page for new search results
-  renderTricksPage(currentFilteredTricks); // Render with filtered tricks
+  currentPage = 1;
+  renderTricksPage(currentFilteredTricks);
 });
 
-// MODIFIED: Initial render now uses the new state variable
 renderTricksPage(currentFilteredTricks);
