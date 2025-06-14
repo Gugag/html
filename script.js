@@ -960,24 +960,26 @@ function renderTricksPage(tricksArray) {
   const endIndex = startIndex + tricksPerPage;
   const pageTricks = tricksArray.slice(startIndex, endIndex); // MODIFIED: use tricksArray
 
-  pageTricks.forEach((trick) => {
+ pageTricks.forEach((trick) => {
     const trickEl = document.createElement("div");
     trickEl.className = "trick-card";
     trickEl.innerHTML = `
-        <h2>${trick.id}. ${trick.title}</h2>
-        <p>${trick.description}</p>
-        <div class="code-block"><code>${trick.code
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")}</code></div>
-        <button class="demo-button" onclick="toggleDemo('demo${
-          trick.id
-        }')">Show Demo</button>
-        <div class="demo-output" id="demo${trick.id}">${trick.demoHtml}</div>
-      `;
+      <h2 contenteditable="true" spellcheck="false">${trick.id}. ${
+      trick.title
+    }</h2>
+      <p contenteditable="true" spellcheck="false">${trick.description}</p>
+      <div class="code-block" contenteditable="true" spellcheck="false">
+        <code>${trick.code.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code>
+      </div>
+      <button class="demo-button" onclick="toggleDemo('demo${
+        trick.id
+      }')">Show Demo</button>
+      <div class="demo-output" id="demo${trick.id}">${trick.demoHtml}</div>
+    `;
     container.appendChild(trickEl);
   });
 
-  renderPagination(tricksArray.length); // MODIFIED: pass tricksArray.length
+  renderPagination(tricksArray.length);
 }
 
 function renderPagination(totalTricks) {
